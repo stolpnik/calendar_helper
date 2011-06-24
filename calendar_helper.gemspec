@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
 There is also a Rails generator that copies some stylesheets for use alone or alongside existing stylesheets.}
   s.email = [%q{boss@topfunky.com}]
   s.extra_rdoc_files = [%q{History.txt}, %q{Manifest.txt}, %q{README.txt}]
-  s.files = [%q{History.txt}, %q{MIT-LICENSE}, %q{Manifest.txt}, %q{README.txt}, %q{Rakefile}, %q{generators/calendar_styles/calendar_styles_generator.rb}, %q{generators/calendar_styles/templates/blue/style.css}, %q{generators/calendar_styles/templates/grey/style.css}, %q{generators/calendar_styles/templates/red/style.css}, %q{init.rb}, %q{lib/calendar_helper.rb}, %q{test/test_calendar_helper.rb}, %q{.gemtest}]
+  s.files = [%q{History.txt}, %q{MIT-LICENSE}, %q{Manifest.txt}, %q{README.txt}, %q{Rakefile}, %q{generators/calendar_styles/calendar_styles_generator.rb}, %q{generators/calendar_styles/templates/blue/style.css}, %q{generators/calendar_styles/templates/grey/style.css}, %q{generators/calendar_styles/templates/red/style.css}, %q{init.rb}, %q{lib/calendar_helper.rb}, %q{test/test_calendar_helper.rb}]
   s.rdoc_options = [%q{--main}, %q{README.txt}]
   s.require_paths = [%q{lib}]
   s.rubyforge_project = %q{calendar_helper}
