@@ -76,10 +76,10 @@ class CalendarHelperTest < Test::Unit::TestCase
   end
 
   def test_first_day_of_week
-    assert_match %r{<tr class="dayName">\s*<th scope='col'><abbr title='Sunday'>Sun}, calendar_with_defaults
+    assert_match %r{<tr class="dayName">\s*<th [^>]*scope='col'><abbr title='Sunday'>Sun}, calendar_with_defaults
     # testing that if the abbrev and contracted version are the same, there should be no abbreviation.
-    assert_match %r{<tr class="dayName">\s*<th scope='col'>Sunday}, calendar_with_defaults(:abbrev => (0..8))
-    assert_match %r{<tr class="dayName">\s*<th scope='col'><abbr title='Monday'>Mon}, calendar_with_defaults(:first_day_of_week => 1)
+    assert_match %r{<tr class="dayName">\s*<th [^>]*scope='col'>Sunday}, calendar_with_defaults(:abbrev => (0..8))
+    assert_match %r{<tr class="dayName">\s*<th [^>]*scope='col'><abbr title='Monday'>Mon}, calendar_with_defaults(:first_day_of_week => 1)
   end
 
   def test_today_is_in_calendar
@@ -108,6 +108,26 @@ class CalendarHelperTest < Test::Unit::TestCase
   def test_custom_summary_attribute
     html = calendar_with_defaults(:summary => 'TEST SUMMARY')
     assert_match %r{<table [^>]*summary="TEST SUMMARY">}, html
+  end
+
+  def test_table_id_defaults_calendar_year_month
+    html = calendar_with_defaults(:year => 1967, :month => 4)
+    assert_match %r{<table [^>]*id="calendar-1967-04"}, html
+  end
+
+  def test_custom_table_id
+    html = calendar_with_defaults(:year => 1967, :month => 4, :table_id => 'test-the-id')
+    assert_match %r{<table [^>]*id="test-the-id"}, html
+  end
+
+  def test_th_id_defaults_calendar_year_month_dow
+    html = calendar_with_defaults(:year => 1967, :month => 4)
+    assert_match %r{<tr class=\"dayName\"><th [^>]*id=\"calendar-1967-04-sun\"}, html
+  end
+
+  def test_each_td_is_associated_with_appriopriate_th
+    html = calendar_with_defaults(:year => 2011, :month => 8)
+    assert_match %r{<td [^>]*headers=\"calendar-2011-08-sun\"[^>]+>31</td>}, html
   end
 
 
