@@ -138,7 +138,7 @@ module CalendarHelper
 
     # previous month
     beginning_of_week(first, first_weekday).upto(first - 1) do |d|
-      cal << generate_other_month_cell(d, options)
+      cal << generate_other_month_cell(d, options, block)
     end unless first.wday == first_weekday
 
     first.upto(last) do |cur|
@@ -157,7 +157,7 @@ module CalendarHelper
 
     # next month
     (last + 1).upto(beginning_of_week(last + 7, first_weekday) - 1)  do |d|
-      cal << generate_other_month_cell(d, options)
+      cal << generate_other_month_cell(d, options, block)
     end unless last.wday == last_weekday
 
     cal << "</tr></tbody></table>"
@@ -195,18 +195,15 @@ module CalendarHelper
     "<td #{cell_attrs}>#{cell_text}</td>"
   end
 
-  def generate_other_month_cell(date, options)
+  def generate_other_month_cell(date, options, block)
+    cell_text, cell_attrs = block.call(date)
     cell_attrs = {}
     cell_attrs[:headers] = th_id(date, options[:table_id])
     cell_attrs[:class] = options[:other_month_class]
     cell_attrs[:class] += " weekendDay" if weekend?(date)
+    cell_text ||= options[:accessible] ? %(#{date.day}<span class="hidden"> #{Date::MONTHNAMES[date.month]}</span>) : date.day
 
-    cell_text = date.day
-    if options[:accessible]
-      cell_text += %(<span class="hidden"> #{Date::MONTHNAMES[date.month]}</span>)
-    end
-
-    generate_cell(date.day, cell_attrs)
+    generate_cell(cell_text, cell_attrs)
   end
 
   # Calculates id for th element.
